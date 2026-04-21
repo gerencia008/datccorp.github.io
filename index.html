@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="DATC CORP S.A.S. · Sistema de Control de Inventario" />
+<meta name="theme-color" content="#EE8312" />
+<title>DATC CORP S.A.S. · Control de Inventario</title>
+
+<!-- Tipografía: Anton (alternativa a Bondia Black) + Outfit (alternativa moderna a Rink) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Outfit:wght@300;400;500;600;700;800&family=Archivo+Black&display=swap" rel="stylesheet">
+
+<!-- Librerías para exportar PDF y Excel -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+<link rel="stylesheet" href="styles.css" />
+
+<!-- Favicon inline con color de marca -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23EE8312'/%3E%3Ctext x='50' y='72' font-family='Arial Black' font-size='62' font-weight='900' fill='white' text-anchor='middle'%3ED%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+
+<!-- =========================================================
+     PANTALLA DE LOGIN
+========================================================= -->
+<section id="login-screen" class="login-screen">
+  <div class="login-split">
+
+    <!-- LADO IZQUIERDO: HERO CON MARCA -->
+    <div class="login-hero">
+      <div class="hero-pattern" aria-hidden="true"></div>
+      <div class="hero-content">
+        <div class="hero-logo">
+          <div class="logo-mark">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="100" height="100" rx="22" fill="white"/>
+              <text x="50" y="72" font-family="Anton, Arial Black" font-size="62" font-weight="900" fill="#EE8312" text-anchor="middle">D</text>
+            </svg>
+          </div>
+          <div class="logo-text">
+            <span class="logo-name">DATC</span>
+            <span class="logo-corp">CORP S.A.S.</span>
+          </div>
+        </div>
+
+        <h1 class="hero-title">
+          CONTROL<br>
+          <span class="hero-accent">TOTAL</span><br>
+          DE TU<br>
+          INVENTARIO.
+        </h1>
+
+        <p class="hero-sub">Un sistema. Cinco sucursales. Cero descuadres.</p>
+
+        <div class="hero-features">
+          <div class="hero-feature">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Cálculo de cuadres automático</span>
+          </div>
+          <div class="hero-feature">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Reportes en PDF y Excel</span>
+          </div>
+          <div class="hero-feature">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Multi-sucursal en tiempo real</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LADO DERECHO: FORMULARIO -->
+    <div class="login-form-side">
+      <div class="login-form-wrap">
+        <div class="form-header">
+          <span class="form-tag">Acceso privado</span>
+          <h2>Ingresa a tu<br>cuenta.</h2>
+          <p>Solo personal autorizado. El administrador otorga acceso.</p>
+        </div>
+
+        <form id="login-form" class="login-form" autocomplete="off">
+          <div class="form-group">
+            <label for="login-user">Usuario</label>
+            <input type="text" id="login-user" name="user" required placeholder="ej. diego.torres" autocomplete="username" />
+          </div>
+          <div class="form-group">
+            <label for="login-pass">Contraseña</label>
+            <input type="password" id="login-pass" name="pass" required placeholder="••••••••" autocomplete="current-password" />
+          </div>
+          <div id="login-error" class="login-error" role="alert" aria-live="polite"></div>
+          <button type="submit" class="btn btn-primary btn-lg btn-full">
+            <span>Ingresar</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </button>
+        </form>
+
+        <div class="login-hint">
+          <strong>Primer ingreso</strong>
+          <div class="hint-row">
+            <span>Usuario:</span> <code>admin</code>
+          </div>
+          <div class="hint-row">
+            <span>Clave:</span> <code>admin2026</code>
+          </div>
+          <p class="muted">Cambia la contraseña después del primer acceso.</p>
+        </div>
+      </div>
+
+      <footer class="login-footer">
+        <span>DATC CORP S.A.S. © 2026</span>
+        <span class="dot-sep">·</span>
+        <span>v2.0</span>
+      </footer>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     APLICACIÓN PRINCIPAL
+========================================================= -->
+<div id="app" class="app hidden">
+
+  <!-- TOP NAVIGATION -->
+  <nav class="top-nav">
+    <div class="nav-inner">
+      <div class="nav-brand">
+        <div class="brand-mark">
+          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="100" height="100" rx="22" fill="#EE8312"/>
+            <text x="50" y="72" font-family="Anton, Arial Black" font-size="62" font-weight="900" fill="white" text-anchor="middle">D</text>
+          </svg>
+        </div>
+        <div class="brand-name">
+          <span class="name-bold">DATC</span>
+          <span class="name-light">CORP</span>
+        </div>
+      </div>
+
+      <div class="nav-menu" id="nav-menu">
+        <button class="nav-link active" data-view="dashboard">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+          <span>Panel</span>
+        </button>
+        <button class="nav-link" data-view="cierre">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          <span>Cierre Diario</span>
+        </button>
+        <button class="nav-link" data-view="historial">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v5h5"/><path d="M3.05 13A9 9 0 1 0 6 5.3L3 8"/><path d="M12 7v5l4 2"/></svg>
+          <span>Historial</span>
+        </button>
+        <button class="nav-link" data-view="productos">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+          <span>Productos</span>
+        </button>
+        <button class="nav-link admin-only" data-view="usuarios">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span>Usuarios</span>
+        </button>
+        <button class="nav-link admin-only" data-view="sucursales">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span>Sucursales</span>
+        </button>
+      </div>
+
+      <div class="nav-right">
+        <select id="branch-selector" class="branch-selector"></select>
+        <div class="nav-user" id="nav-user-btn">
+          <div class="user-avatar" id="user-avatar">?</div>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="dd-header">
+              <div class="dd-name" id="user-name">—</div>
+              <div class="dd-role" id="user-role">—</div>
+            </div>
+            <button class="dd-item" id="btn-logout">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+              <span>Cerrar sesión</span>
+            </button>
+          </div>
+        </div>
+        <button class="nav-mobile-toggle" id="mobile-toggle" aria-label="Menú">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="main">
+    <div class="view-container">
+
+      <!-- ============ DASHBOARD ============ -->
+      <section id="view-dashboard" class="view active">
+        <div class="dashboard-hero reveal">
+          <span class="eyebrow">Panel general</span>
+          <h1 class="mega-title">Todo tu negocio.<br><span class="accent">En una sola vista.</span></h1>
+          <p class="hero-lead" id="dash-today"></p>
+        </div>
+
+        <!-- Stats grid con iconos grandes -->
+        <div class="stats-grid" id="stats-grid"></div>
+
+        <!-- Accesos rápidos -->
+        <div class="quick-actions reveal">
+          <h2 class="section-title">Accesos rápidos.</h2>
+          <div class="actions-grid">
+            <button class="action-card" data-navigate="cierre">
+              <div class="action-icon action-orange">
+                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="20" y="15" width="60" height="75" rx="6" stroke="currentColor" stroke-width="5" stroke-linejoin="round"/>
+                  <line x1="32" y1="35" x2="68" y2="35" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+                  <line x1="32" y1="50" x2="68" y2="50" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+                  <line x1="32" y1="65" x2="55" y2="65" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+                  <circle cx="72" cy="72" r="15" fill="white" stroke="currentColor" stroke-width="5"/>
+                  <path d="M66 72 L71 77 L79 68" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                </svg>
+              </div>
+              <div class="action-title">Nuevo cierre</div>
+              <div class="action-desc">Registra el inventario del día</div>
+            </button>
+
+            <button class="action-card" data-navigate="historial">
+              <div class="action-icon action-red">
+                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="55" cy="50" r="32" stroke="currentColor" stroke-width="5"/>
+                  <path d="M55 32 L55 50 L68 58" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M20 35 L20 20 L35 20" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M20 20 C20 20, 33 10, 50 15" stroke="currentColor" stroke-width="5" stroke-linecap="round" fill="none"/>
+                </svg>
+              </div>
+              <div class="action-title">Ver historial</div>
+              <div class="action-desc">Consulta y descarga reportes</div>
+            </button>
+
+            <button class="action-card" data-navigate="productos">
+              <div class="action-icon action-purple">
+                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M50 10 L85 30 L85 70 L50 90 L15 70 L15 30 Z" stroke="currentColor" stroke-width="5" stroke-linejoin="round" fill="none"/>
+                  <path d="M15 30 L50 50 L85 30" stroke="currentColor" stroke-width="5" stroke-linejoin="round"/>
+                  <line x1="50" y1="50" x2="50" y2="90" stroke="currentColor" stroke-width="5"/>
+                </svg>
+              </div>
+              <div class="action-title">Productos</div>
+              <div class="action-desc">Gestiona el catálogo</div>
+            </button>
+
+            <button class="action-card admin-only" data-navigate="usuarios">
+              <div class="action-icon action-brown">
+                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="40" cy="35" r="12" stroke="currentColor" stroke-width="5"/>
+                  <path d="M20 75 C20 62, 30 55, 40 55 C50 55, 60 62, 60 75" stroke="currentColor" stroke-width="5" stroke-linecap="round" fill="none"/>
+                  <circle cx="68" cy="30" r="9" stroke="currentColor" stroke-width="5"/>
+                  <path d="M58 65 C60 55, 68 50, 76 52 C84 54, 88 62, 88 70" stroke="currentColor" stroke-width="5" stroke-linecap="round" fill="none"/>
+                </svg>
+              </div>
+              <div class="action-title">Usuarios</div>
+              <div class="action-desc">Administra los accesos</div>
+            </button>
+          </div>
+        </div>
+
+        <!-- Feature grid -->
+        <div class="dashboard-feature-grid">
+          <div class="feature-card reveal">
+            <div class="feature-header">
+              <div class="feature-icon feature-orange">
+                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M15 75 L30 55 L45 65 L65 35 L85 50" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                  <circle cx="30" cy="55" r="4" fill="currentColor"/>
+                  <circle cx="45" cy="65" r="4" fill="currentColor"/>
+                  <circle cx="65" cy="35" r="4" fill="currentColor"/>
+                  <circle cx="85" cy="50" r="4" fill="currentColor"/>
+                </svg>
+              </div>
+              <div class="feature-header-text">
+                <h3>Últimos cierres</h3>
+                <p class="muted">Movimiento reciente de tu sucursal</p>
+              </div>
+              <button class="btn btn-ghost btn-sm" data-navigate="historial">Ver todos →</button>
+            </div>
+            <div id="dash-recent" class="recent-list"></div>
+          </div>
+
+          <div class="feature-card reveal">
+            <div class="feature-header">
+              <div class="feature-icon feature-red">
+                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M50 15 L85 75 L15 75 Z" stroke="currentColor" stroke-width="5" stroke-linejoin="round" fill="none"/>
+                  <line x1="50" y1="40" x2="50" y2="58" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+                  <circle cx="50" cy="68" r="3" fill="currentColor"/>
+                </svg>
+              </div>
+              <div class="feature-header-text">
+                <h3>Bajo stock mínimo</h3>
+                <p class="muted">Productos que requieren reposición</p>
+              </div>
+              <span class="badge-lg" id="low-stock-count">0</span>
+            </div>
+            <div id="dash-lowstock" class="lowstock-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ CIERRE DIARIO ============ -->
+      <section id="view-cierre" class="view">
+        <div class="view-hero reveal">
+          <span class="eyebrow">Operación diaria</span>
+          <h1 class="mega-title">Cierre <span class="accent">diario</span> de caja.</h1>
+          <p class="hero-lead">Ingresa las existencias. El sistema calcula todo lo demás.</p>
+        </div>
+
+        <div class="view-toolbar">
+          <div class="toolbar-left"></div>
+          <div class="toolbar-right">
+            <button class="btn btn-ghost" id="btn-load-previous">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v5h5"/><path d="M3.05 13A9 9 0 1 0 6 5.3L3 8"/></svg>
+              Cargar día anterior
+            </button>
+            <button class="btn btn-primary" id="btn-save-cierre">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+              Guardar cierre
+            </button>
+          </div>
+        </div>
+
+        <div class="cierre-meta card-apple">
+          <div class="meta-row">
+            <div class="meta-field">
+              <label>Fecha</label>
+              <input type="date" id="cierre-fecha" />
+            </div>
+            <div class="meta-field">
+              <label>Responsable</label>
+              <input type="text" id="cierre-responsable" placeholder="Nombre del responsable" />
+            </div>
+            <div class="meta-field">
+              <label>N° Cierre</label>
+              <div class="meta-value" id="cierre-numero">—</div>
+            </div>
+            <div class="meta-field cuadre-summary">
+              <label>Estado del cuadre</label>
+              <div class="meta-value cuadre-status" id="cuadre-status">
+                <span class="dot"></span>
+                <span>Sin datos</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-apple no-padding">
+          <div class="table-scroll">
+            <table class="inv-table">
+              <thead>
+                <tr>
+                  <th class="col-producto">Producto</th>
+                  <th>Inv. Inicial</th>
+                  <th>Ingresos</th>
+                  <th>Total 1</th>
+                  <th>Ventas</th>
+                  <th>Mermas</th>
+                  <th>Existencias</th>
+                  <th>Total 2</th>
+                  <th class="col-cuadre">Cuadre</th>
+                </tr>
+              </thead>
+              <tbody id="inv-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="registros-grid">
+          <div class="card-apple">
+            <div class="card-header">
+              <div class="card-title-row">
+                <div class="mini-icon mini-orange">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                </div>
+                <h3>Registro de gastos</h3>
+              </div>
+              <button class="btn btn-ghost btn-sm" id="btn-add-gasto">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Agregar
+              </button>
+            </div>
+            <div id="gastos-list" class="item-list"></div>
+            <div class="list-total">
+              <span>Total gastos</span>
+              <span class="mono" id="gastos-total">$ 0.00</span>
+            </div>
+          </div>
+
+          <div class="card-apple">
+            <div class="card-header">
+              <div class="card-title-row">
+                <div class="mini-icon mini-red">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+                </div>
+                <h3>Registro de mermas</h3>
+              </div>
+              <button class="btn btn-ghost btn-sm" id="btn-add-merma">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Agregar
+              </button>
+            </div>
+            <div id="mermas-list" class="item-list"></div>
+            <div class="list-total">
+              <span>Total unidades</span>
+              <span class="mono" id="mermas-total">0</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-apple total-card">
+          <div class="total-row">
+            <div class="total-info">
+              <div class="mini-icon mini-white">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              </div>
+              <div>
+                <label>Total de ventas del día</label>
+                <p class="muted-light">Monto total facturado</p>
+              </div>
+            </div>
+            <div class="total-input-wrap">
+              <span class="currency">$</span>
+              <input type="number" step="0.01" id="cierre-total-ventas" placeholder="0.00" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ HISTORIAL ============ -->
+      <section id="view-historial" class="view">
+        <div class="view-hero reveal">
+          <span class="eyebrow">Archivo</span>
+          <h1 class="mega-title">Historial de <span class="accent">cierres</span>.</h1>
+          <p class="hero-lead">Filtra por fecha, consulta y descarga reportes en PDF o Excel.</p>
+        </div>
+
+        <div class="filters-bar card-apple">
+          <div class="filter-group">
+            <label>Desde</label>
+            <input type="date" id="filter-from" />
+          </div>
+          <div class="filter-group">
+            <label>Hasta</label>
+            <input type="date" id="filter-to" />
+          </div>
+          <div class="filter-group">
+            <label>Responsable</label>
+            <input type="text" id="filter-resp" placeholder="Buscar..." />
+          </div>
+          <div class="filter-group filter-actions">
+            <label>&nbsp;</label>
+            <div class="filter-btns">
+              <button class="btn btn-ghost" id="btn-clear-filters">Limpiar</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Barra de descarga destacada -->
+        <div class="download-bar reveal">
+          <div class="download-info">
+            <div class="mini-icon mini-brown">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            </div>
+            <div>
+              <strong>Descargar reporte filtrado</strong>
+              <p class="muted">Exporta los cierres actualmente visibles según los filtros aplicados</p>
+            </div>
+          </div>
+          <div class="download-buttons">
+            <button class="btn btn-secondary" id="btn-export-pdf">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              Descargar PDF
+            </button>
+            <button class="btn btn-primary" id="btn-export-excel">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
+              Descargar Excel
+            </button>
+          </div>
+        </div>
+
+        <div class="card-apple no-padding">
+          <div class="table-scroll">
+            <table class="hist-table">
+              <thead>
+                <tr>
+                  <th>N°</th>
+                  <th>Fecha</th>
+                  <th>Sucursal</th>
+                  <th>Responsable</th>
+                  <th>Total ventas</th>
+                  <th>Descuadres</th>
+                  <th>Estado</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="hist-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ PRODUCTOS ============ -->
+      <section id="view-productos" class="view">
+        <div class="view-hero reveal">
+          <span class="eyebrow">Catálogo</span>
+          <h1 class="mega-title">Productos <span class="accent">controlados</span>.</h1>
+          <p class="hero-lead">Todo lo que se mide a diario en cada sucursal.</p>
+        </div>
+
+        <div class="view-toolbar">
+          <div class="toolbar-left"></div>
+          <div class="toolbar-right">
+            <button class="btn btn-primary admin-only" id="btn-add-producto">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Nuevo producto
+            </button>
+          </div>
+        </div>
+
+        <div class="card-apple no-padding">
+          <div class="table-scroll">
+            <table class="prod-table">
+              <thead>
+                <tr>
+                  <th>Orden</th>
+                  <th>Producto</th>
+                  <th>Categoría</th>
+                  <th>Unidad</th>
+                  <th>Stock mínimo</th>
+                  <th>Activo</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="prod-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ USUARIOS ============ -->
+      <section id="view-usuarios" class="view">
+        <div class="view-hero reveal">
+          <span class="eyebrow">Administración</span>
+          <h1 class="mega-title">Gestión de <span class="accent">usuarios</span>.</h1>
+          <p class="hero-lead">Solo el administrador puede crear y dar acceso a nuevos usuarios.</p>
+        </div>
+
+        <div class="view-toolbar">
+          <div class="toolbar-left"></div>
+          <div class="toolbar-right">
+            <button class="btn btn-primary" id="btn-add-user">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Nuevo usuario
+            </button>
+          </div>
+        </div>
+
+        <div class="card-apple no-padding">
+          <div class="table-scroll">
+            <table class="user-table">
+              <thead>
+                <tr>
+                  <th>Usuario</th>
+                  <th>Nombre completo</th>
+                  <th>Rol</th>
+                  <th>Sucursal</th>
+                  <th>Estado</th>
+                  <th>Creado</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="user-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ SUCURSALES ============ -->
+      <section id="view-sucursales" class="view">
+        <div class="view-hero reveal">
+          <span class="eyebrow">Red</span>
+          <h1 class="mega-title">Todas las <span class="accent">sucursales</span>.</h1>
+          <p class="hero-lead">Puyo. Tena. Riobamba. Un solo sistema.</p>
+        </div>
+
+        <div class="view-toolbar">
+          <div class="toolbar-left"></div>
+          <div class="toolbar-right">
+            <button class="btn btn-primary" id="btn-add-branch">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Nueva sucursal
+            </button>
+          </div>
+        </div>
+
+        <div class="branches-grid" id="branches-grid"></div>
+      </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="apple-footer">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <strong>DATC CORP S.A.S.</strong>
+          <span>Sistema de Control de Inventario · v2.0</span>
+        </div>
+        <div class="footer-meta">
+          <span>Puyo · Tena · Riobamba</span>
+          <span class="dot-sep">·</span>
+          <span>© 2026 DATC CORP S.A.S.</span>
+        </div>
+      </div>
+    </footer>
+  </main>
+</div>
+
+<!-- MODAL -->
+<div id="modal" class="modal hidden" aria-hidden="true">
+  <div class="modal-backdrop"></div>
+  <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-header">
+      <h3 id="modal-title">—</h3>
+      <button class="modal-close" id="modal-close" aria-label="Cerrar">×</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+    <div class="modal-footer" id="modal-footer"></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
